@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitud de Trámite - SIGTD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel ="stylesheet" href="style_header.css">
+    <link rel="stylesheet" href="style_footer.css">
+    <style>
+        .form-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .form-header h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-size: 1.75rem;
+        }
+
+        .form-header p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .form-header .badge {
+            margin-top: 1rem;
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+            padding: 2rem;
+            background-color: var(--bg-light);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary);
+        }
+
+        .form-section h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-icon {
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .required {
+            color: var(--error);
+            margin-left: 0.25rem;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        input[type="date"]:focus,
+        input[type="number"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* File Upload Styling */
+        .file-upload-section {
+            background-color: white;
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius);
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload-section:hover {
+            border-color: var(--primary);
+            background-color: rgba(30, 64, 175, 0.02);
+        }
+
+        .file-upload-section input[type="file"] {
+            display: none;
+        }
+
+        .upload-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .upload-text {
+            color: var(--text-dark);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .upload-subtext {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .file-list {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem;
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+        }
+
+        .file-name {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .file-remove {
+            background-color: var(--error);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            transition: background-color 0.3s;
+        }
+
+        .file-remove:hover {
+            background-color: #dc2626;
+        }
+
+        /* Interoperability Section */
+        .interoperability-box {
+            background-color: white;
+            border: 2px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .interoperability-box h4 {
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .interoperability-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .interoperability-item:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            color: var(--success);
+            font-weight: bold;
+            margin-top: 0.25rem;
+            font-size: 1.25rem;
+        }
+
+        .interoperability-text {
+            flex: 1;
+            color: var(--text-dark);
+        }
+
+        .interoperability-text strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .interoperability-text small {
+            color: var(--text-gray);
+        }
+
+        /* Dynamic Fields */
+        .dynamic-fields {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .field-hidden {
+            display: none;
+        }
+
+        /* Form Footer */
+        .form-footer {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: flex-end;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-submit,
+        .btn-cancel {
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-submit {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-submit:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background-color: var(--border-color);
+            color: var(--text-dark);
+        }
+
+        .btn-cancel:hover {
+            background-color: #d1d5db;
+        }
+
+        .success-alert {
+            display: none;
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .success-alert.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 1.5rem;
+            }
+
+            .form-section {
+                padding: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .form-footer {
+                flex-direction: column;
+            }
+
+            .btn-submit,
+            .btn-cancel {
+                width: 100%;
+            }
+
+            .form-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <img src="img/SJM.png">
+                <div class="logo">
+                    
+                    <h1>SIGTD</h1>
+                    <p>Sistema Digital de Trámites</p>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Inicio</a>
+                    <a href="catalogo_tramites.html" class="nav-link active">Nuevo Trámite</a>
+                    <a href="consulta-tramite.html" class="nav-link">Consultar Estado</a>
+                    <a href="admin.html" class="nav-link">Administración</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <div class="form-container">
+                <!-- Success Alert -->
+                <div class="success-alert" id="successAlert">
+                    <strong>¡Solicitud enviada correctamente!</strong> Tu número de expediente es: <span id="successNumber"></span>
+                </div>
+
+                <!-- Form Header -->
+                <div class="form-header" id="formHeader">
+                    <h2 id="pageTitle">Solicitud de Trámite</h2>
+                    <p id="pageDescription">Por favor completa el formulario con tus datos y la información requerida para tu trámite.</p>
+                    <div id="procedureBadge"></div>
+                </div>
+
+                <form id="procedureForm">
+                    <!-- BLOCK A: Datos del Solicitante -->
+                    <div class="form-section">
+                        <h3><span class="section-icon">👤</span> Datos del Solicitante</h3>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="dni">DNI <span class="required">*</span></label>
+                                <input type="text" id="dni" name="dni" placeholder="12345678" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="fullname">Nombre Completo <span class="required">*</span></label>
+                                <input type="text" id="fullname" name="fullname" placeholder="Ej: Juan Pérez García" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email">Correo Electrónico <span class="required">*</span></label>
+                                <input type="email" id="email" name="email" placeholder="correo@ejemplo.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Teléfono <span class="required">*</span></label>
+                                <input type="tel" id="phone" name="phone" placeholder="(01) 123-4567" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="address">Dirección <span class="required">*</span></label>
+                            <input type="text" id="address" name="address" placeholder="Av. Principal 123, Apto 4B" required>
+                        </div>
+                    </div>
+
+                    <!-- BLOCK B: Datos Específicos del Servicio -->
+                    <div class="form-section" id="blockB">
+                        <h3><span class="section-icon">📋</span> Datos del Trámite</h3>
+                        
+                        <!-- Fields for Licencia de Funcionamiento -->
+                        <div id="licencia-fields" class="dynamic-fields">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="ruc">RUC <span class="required">*</span></label>
+                                    <input type="text" id="ruc" name="ruc" placeholder="20123456789">
+                                </div>
+                                <div class="form-group">
+                                    <label for="business-name">Razón Social <span class="required">*</span></label>
+                                    <input type="text" id="business-name" name="business-name" placeholder="Empresa S.A.C.">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="commercial-name">Nombre Comercial</label>
+                                    <input type="text" id="commercial-name" name="commercial-name" placeholder="Ej: Mi Negocio">
+                                </div>
+                                <div class="form-group">
+                                    <label for="economic-activity">Actividad Económica <span class="required">*</span></label>
+                                    <select id="economic-activity" name="economic-activity">
+                                        <option value="">Selecciona una actividad</option>
+                                        <option value="comercio">Comercio</option>
+                                        <option value="restaurante">Restaurante</option>
+                                        <option value="farmacia">Farmacia</option>
+                                        <option value="servicios">Servicios</option>
+                                        <option value="otros">Otros</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="establishment-address">Dirección del Establecimiento <span class="required">*</span></label>
+                                    <input type="text" id="establishment-address" name="establishment-address" placeholder="Av. Secundaria 456">
+                                </div>
+                                <div class="form-group">
+                                    <label for="area">Área del Local (m²) <span class="required">*</span></label>
+                                    <input type="number" id="area" name="area" placeholder="100" min="1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Fields for other procedures (generic) -->
+                        <div id="generic-fields" class="dynamic-fields field-hidden">
+                            <div class="form-group">
+                                <label for="procedure-description">Descripción del Trámite <span class="required">*</span></label>
+                                <textarea id="procedure-description" name="procedure-description" placeholder="Describe detalladamente lo que necesitas..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="additional-info">Información Adicional</label>
+                                <textarea id="additional-info" name="additional-info" placeholder="Cualquier detalle adicional que consideres importante..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOCK C: Adjuntar Documentos -->
+                    <div class="form-section">
+                        <h3><span class="section-icon">📎</span> Documentos Requeridos</h3>
+                        
+                        <div class="form-group">
+                            <label>Adjuntar archivos (PDF, JPG, PNG) <span class="required">*</span></label>
+                            <div class="file-upload-section" onclick="document.getElementById('fileInput').click()">
+                                <div class="upload-icon">📤</div>
+                                <div class="upload-text">Haz clic para seleccionar archivos</div>
+                                <div class="upload-subtext">o arrastra y suelta tus archivos aquí</div>
+                                <input type="file" id="fileInput" name="documents" multiple accept=".pdf,.jpg,.jpeg,.png" required>
+                            </div>
+                            <div class="file-list" id="fileList"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="additional-files">Archivos Adicionales (Opcional)</label>
+                            <div class="file-upload-section" onclick="document.getElementById('fileInputAdditional').click()">
+                                <div class="upload-icon">📤</div>
+                                <div class="upload-text">Archivos adicionales</div>
+                                <div class="upload-subtext">Sube documentos extra si es necesario</div>
+                                <input type="file" id="fileInputAdditional" name="additional-documents" multiple accept=".pdf,.jpg,.jpeg,.png">
+                            </div>
+                            <div class="file-list" id="additionalFileList"></div>
+                        </div>
+                    </div>
+
+                    <!-- BLOCK D: Interoperabilidad -->
+                    <div class="form-section">
+                        <h3><span class="section-icon">🔗</span> Validaciones Automáticas</h3>
+                        
+                        <div class="interoperability-box">
+                            <h4><span class="check-icon">✓</span> Este sistema valida automáticamente:</h4>
+                            
+                            <div class="interoperability-item">
+                                <div class="check-icon">✓</div>
+                                <div class="interoperability-text">
+                                    <strong>DNI del Solicitante</strong>
+                                    <small>Verificación en RENIEC (Registro Nacional de Identidad y Estado Civil)</small>
+                                </div>
+                            </div>
+
+                            <div class="interoperability-item" id="rucValidation" style="display: none;">
+                                <div class="check-icon">✓</div>
+                                <div class="interoperability-text">
+                                    <strong>RUC del Negocio</strong>
+                                    <small>Validación con SUNAT (Superintendencia Nacional de Aduanas y de Administración Tributaria)</small>
+                                </div>
+                            </div>
+
+                            <div class="interoperability-item">
+                                <div class="check-icon">✓</div>
+                                <div class="interoperability-text">
+                                    <strong>Código de Operación</strong>
+                                    <small>Generación y registro automático con Banco de la Nación para pagos</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Footer -->
+                    <div class="form-footer">
+                        <button type="button" class="btn-cancel" onclick="goBack()">Cancelar</button>
+                        <button type="submit" class="btn-submit">Continuar a Pago</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Municipalidad de San Juan de Miraflores</h4>
+                    <p>Av. Principal 123, San Juan de Miraflores</p>
+                    <p>Teléfono: (01) 123-4567</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Útiles</h4>
+                    <a href="index.html">Inicio</a>
+                    <a href="catalogo-tramites.html">Catálogo de Trámites</a>
+                    <a href="consulta-tramite.html">Consultar Estado</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Municipalidad de San Juan de Miraflores. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Get procedure type from URL or default
+        const urlParams = new URLSearchParams(window.location.search);
+        const procedureType = urlParams.get('type') || 'generic';
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            setupFileUpload();
+            setupFormValidation();
+        });
+
+        function initializePage() {
+            const procedureDetails = getProcedureDetails(procedureType);
+            
+            document.getElementById('pageTitle').textContent = procedureDetails.title;
+            document.getElementById('pageDescription').textContent = procedureDetails.description;
+            document.getElementById('procedureBadge').innerHTML = 
+                `<span class="badge ${procedureDetails.badgeClass}">${procedureDetails.riskLevel}</span>`;
+
+            // Show/hide dynamic fields
+            if (procedureType === 'licencia-funcionamiento') {
+                document.getElementById('licencia-fields').classList.remove('field-hidden');
+                document.getElementById('generic-fields').classList.add('field-hidden');
+                document.getElementById('rucValidation').style.display = 'flex';
+            } else {
+                document.getElementById('licencia-fields').classList.add('field-hidden');
+                document.getElementById('generic-fields').classList.remove('field-hidden');
+                document.getElementById('rucValidation').style.display = 'none';
+            }
+        }
+
+        function getProcedureDetails(type) {
+            const procedures = {
+                'licencia-funcionamiento': {
+                    title: 'Solicitud de Licencia de Funcionamiento – Riesgo Bajo',
+                    description: 'Autorización para que establecimientos comerciales operen en el distrito. Incluye validación de datos con entidades del Estado.',
+                    badgeClass: 'badge-primary',
+                    riskLevel: 'Riesgo Bajo'
+                },
+                'permiso-obra': {
+                    title: 'Solicitud de Permiso de Obra – Riesgo Medio',
+                    description: 'Autorización para realizar construcciones, reformas o reparaciones. Válido por 12 meses.',
+                    badgeClass: 'badge-warning',
+                    riskLevel: 'Riesgo Medio'
+                },
+                'certificado-domicilio': {
+                    title: 'Solicitud de Certificado de Domicilio – Riesgo Bajo',
+                    description: 'Constancia de residencia en el distrito de San Juan de Miraflores. Trámite rápido (3 días hábiles).',
+                    badgeClass: 'badge-success',
+                    riskLevel: 'Riesgo Bajo'
+                }
+            };
+
+            return procedures[type] || {
+                title: 'Solicitud de Trámite',
+                description: 'Por favor completa el formulario con tus datos y la información requerida para tu trámite.',
+                badgeClass: 'badge-primary',
+                riskLevel: 'Estándar'
+            };
+        }
+
+        function setupFileUpload() {
+            const fileInput = document.getElementById('fileInput');
+            const fileList = document.getElementById('fileList');
+            const fileInputAdditional = document.getElementById('fileInputAdditional');
+            const additionalFileList = document.getElementById('additionalFileList');
+
+            [fileInput, fileInputAdditional].forEach((input, index) => {
+                const targetList = index === 0 ? fileList : additionalFileList;
+                
+                input.addEventListener('change', function(e) {
+                    displayFiles(this.files, targetList);
+                });
+            });
+
+            // Drag and drop
+            [fileList.parentElement, additionalFileList.parentElement].forEach(section => {
+                section.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    section.style.borderColor = 'var(--primary)';
+                    section.style.backgroundColor = 'rgba(30, 64, 175, 0.05)';
+                });
+
+                section.addEventListener('dragleave', () => {
+                    section.style.borderColor = 'var(--border-color)';
+                    section.style.backgroundColor = 'white';
+                });
+
+                section.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    section.style.borderColor = 'var(--border-color)';
+                    section.style.backgroundColor = 'white';
+                });
+            });
+        }
+
+        function displayFiles(files, targetList) {
+            targetList.innerHTML = '';
+            Array.from(files).forEach((file, index) => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                fileItem.innerHTML = `
+                    <span class="file-name">${file.name}</span>
+                    <button type="button" class="file-remove" onclick="removeFile(this, '${index}')">✕</button>
+                `;
+                targetList.appendChild(fileItem);
+            });
+        }
+
+        function removeFile(button, index) {
+            button.closest('.file-item').remove();
+        }
+
+        function setupFormValidation() {
+            document.getElementById('procedureForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                submitForm();
+            });
+        }
+
+        function submitForm() {
+            if (!document.getElementById('procedureForm').checkValidity()) {
+                alert('Por favor completa todos los campos requeridos');
+                return;
+            }
+
+            // Generate tracking number
+            const trackingNumber = 'MJM-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 100000)).padStart(6, '0');
+            document.getElementById('successNumber').textContent = trackingNumber;
+
+            // Store in localStorage
+            const formData = {
+                trackingNumber: trackingNumber,
+                procedureType: procedureType,
+                fullname: document.getElementById('fullname').value,
+                dni: document.getElementById('dni').value,
+                email: document.getElementById('email').value,
+                date: new Date().toLocaleDateString('es-PE'),
+                status: 'Pagado'
+            };
+
+            let procedures = JSON.parse(localStorage.getItem('procedures')) || [];
+            procedures.push(formData);
+            localStorage.setItem('procedures', JSON.stringify(procedures));
+
+            // Show success message
+            document.getElementById('successAlert').classList.add('show');
+            document.getElementById('procedureForm').reset();
+            document.getElementById('fileList').innerHTML = '';
+
+            // Redirect after delay
+            setTimeout(() => {
+                window.location.href = 'pago.html?numero=' + trackingNumber;
+            }, 2000);
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

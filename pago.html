@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago del Trámite - SIGTD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style_header.css">
+    <link rel="stylesheet" href="style_footer.css">
+    <style>
+        .payment-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .payment-summary {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+        }
+
+        .payment-summary h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .summary-value {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .summary-amount {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            border-top: 2px solid var(--primary);
+            margin-top: 1.5rem;
+        }
+
+        .summary-amount .summary-label {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .summary-amount .summary-value {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+
+        .payment-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-form h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        /* Bank Instructions Section */
+        .bank-instructions {
+            background-color: var(--accent-light);
+            border: 2px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .bank-instructions h3 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .bank-instructions p {
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin-bottom: 0.75rem;
+        }
+
+        .bank-instructions p:last-child {
+            margin-bottom: 0;
+        }
+
+        .bank-instructions strong {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .payment-details {
+            background-color: var(--bg-light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-details h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-row .label {
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .detail-row .value {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Form Section */
+        .form-section-payment {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background-color: var(--bg-light);
+            border-radius: var(--radius);
+            border-left: 4px solid var(--primary);
+        }
+
+        .form-section-payment h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .form-group-payment {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .required {
+            color: var(--error);
+            margin-left: 0.25rem;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+        }
+
+        /* Validation Message */
+        .validation-message {
+            display: none;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .validation-message.success {
+            display: block;
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+        }
+
+        .validation-message.error {
+            display: block;
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error);
+            color: var(--error);
+        }
+
+        .validation-icon {
+            margin-right: 0.5rem;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .payment-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-confirm,
+        .btn-back {
+            flex: 1;
+            padding: 0.75rem;
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-confirm {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-confirm:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+        }
+
+        .btn-confirm:disabled {
+            background-color: #d1d5db;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-back {
+            background-color: var(--border-color);
+            color: var(--text-dark);
+        }
+
+        .btn-back:hover {
+            background-color: #d1d5db;
+            transform: translateY(-2px);
+        }
+
+        /* Success Alert */
+        .success-alert {
+            display: none;
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .success-alert.show {
+            display: block;
+        }
+
+        .success-alert strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .payment-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .payment-summary,
+            .payment-form {
+                padding: 1.5rem;
+            }
+
+            .payment-buttons {
+                flex-direction: column;
+            }
+
+            .btn-confirm,
+            .btn-back {
+                width: 100%;
+            }
+
+            .summary-item,
+            .summary-amount {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .payment-form h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <img src="img/SJM.png">
+                <div class="logo">
+                    
+                    <h1>SIGTD</h1>
+                    <p>Sistema Digital de Trámites</p>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Inicio</a>
+                    <a href="catalogo_tramites.html" class="nav-link active">Nuevo Trámite</a>
+                    <a href="consulta-tramite.html" class="nav-link">Consultar Estado</a>
+                    <a href="admin.html" class="nav-link">Administración</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="page-header">
+            <h2>Confirmación de Pago</h2>
+            <p>Complete el pago en el Banco de la Nación</p>
+        </div>
+
+        <div class="container">
+            <div class="payment-container">
+                <!-- Left Column: Payment Summary -->
+                <div class="payment-summary">
+                    <h2>Resumen del Trámite</h2>
+                    
+                    <div class="summary-item">
+                        <span class="summary-label">Tipo de Trámite:</span>
+                        <span class="summary-value" id="summaryProcedure">Licencia de Funcionamiento</span>
+                    </div>
+
+                    <div class="summary-item">
+                        <span class="summary-label">Nombre del Solicitante:</span>
+                        <span class="summary-value" id="summaryName">-</span>
+                    </div>
+
+                    <div class="summary-item">
+                        <span class="summary-label">DNI:</span>
+                        <span class="summary-value" id="summaryDNI">-</span>
+                    </div>
+
+                    <div class="summary-item">
+                        <span class="summary-label">RUC (si lo tiene):</span>
+                        <span class="summary-value" id="summaryRUC">-</span>
+                    </div>
+
+                    <div class="summary-amount">
+                        <span class="summary-label">Monto a Pagar:</span>
+                        <span class="summary-value">S/ <span id="summaryAmount">250.00</span></span>
+                    </div>
+                </div>
+
+                <!-- Right Column: Payment Form -->
+                <div class="payment-form">
+                    <h2>Detalles del Pago</h2>
+
+                    <!-- Success Alert -->
+                    <div class="success-alert" id="successAlert">
+                        <strong>¡Pago confirmado correctamente!</strong>
+                        Tu expediente ha sido generado. Número de expediente: <span id="successExpedient"></span>
+                    </div>
+
+                    <!-- Bank Instructions -->
+                    <div class="bank-instructions">
+                        <h3>📌 Instrucciones:</h3>
+                        <p>Realice el pago en el <strong>Banco de la Nación</strong> usando los siguientes datos:</p>
+                        <p><strong>Cuenta:</strong> 0071-234567-0-89</p>
+                        <p><strong>Monto:</strong> S/ <span id="bankAmount">250.00</span></p>
+                        <p><strong>Concepto:</strong> Pago de Trámites Municipales</p>
+                        <p style="margin-top: 1rem; font-style: italic;">Después de realizar el pago, registre aquí el código de operación que le proporcione el banco.</p>
+                    </div>
+
+                    <!-- Payment Details Reference -->
+                    <div class="payment-details">
+                        <h4>Datos de Referencia</h4>
+                        <div class="detail-row">
+                            <span class="label">Número de Referencia:</span>
+                            <span class="value" id="referenceNumber">MJM-2025-000123</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="label">Fecha de Generación:</span>
+                            <span class="value" id="referenceDate">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Operation Code Form -->
+                    <form id="paymentForm" onsubmit="confirmPayment(event)">
+                        <div class="form-section-payment">
+                            <h3>Código de Operación del Banco de la Nación</h3>
+                            
+                            <div class="form-group-payment">
+                                <label for="operationCode">Código de Operación <span class="required">*</span></label>
+                                <input 
+                                    type="text" 
+                                    id="operationCode" 
+                                    name="operationCode" 
+                                    placeholder="Ej: BN-2025-123456" 
+                                    required
+                                    pattern="[A-Za-z0-9\-]{10,20}"
+                                >
+                            </div>
+
+                            <div class="validation-message" id="validationMessage"></div>
+                        </div>
+
+                        <!-- Interoperability Message -->
+                        <div class="form-section-payment">
+                            <h3>🔗 Validación</h3>
+                            <p style="color: var(--text-gray); line-height: 1.6;">
+                                El sistema verificará este código con los registros del <strong>Banco de la Nación</strong> 
+                                (validación simulada en este prototipo). Una vez confirmado, tu expediente estará completamente registrado 
+                                en el sistema municipal.
+                            </p>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="payment-buttons">
+                            <button type="button" class="btn-back" onclick="goBack()">Volver Atrás</button>
+                            <button type="submit" class="btn-confirm" id="confirmBtn">Confirmar Pago y Generar Expediente</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Municipalidad de San Juan de Miraflores</h4>
+                    <p>Av. Principal 123, San Juan de Miraflores</p>
+                    <p>Teléfono: (01) 123-4567</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Útiles</h4>
+                    <a href="index.html">Inicio</a>
+                    <a href="catalogo-tramites.html">Catálogo de Trámites</a>
+                    <a href="consulta-tramite.html">Consultar Estado</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Municipalidad de San Juan de Miraflores. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPaymentData();
+            setupFormValidation();
+        });
+
+        function loadPaymentData() {
+            // Get data from URL parameters or sessionStorage
+            const urlParams = new URLSearchParams(window.location.search);
+            const procedureType = urlParams.get('type') || 'licencia-funcionamiento';
+            
+            // Simulate payment data
+            const paymentData = {
+                procedureType: 'Licencia de Funcionamiento',
+                fullname: sessionStorage.getItem('fullname') || 'Juan Pérez García',
+                dni: sessionStorage.getItem('dni') || '12345678',
+                ruc: sessionStorage.getItem('ruc') || '20123456789',
+                amount: '250.00'
+            };
+
+            // Set summary data
+            document.getElementById('summaryProcedure').textContent = paymentData.procedureType;
+            document.getElementById('summaryName').textContent = paymentData.fullname;
+            document.getElementById('summaryDNI').textContent = paymentData.dni;
+            document.getElementById('summaryRUC').textContent = paymentData.ruc;
+            document.getElementById('summaryAmount').textContent = paymentData.amount;
+            document.getElementById('bankAmount').textContent = paymentData.amount;
+
+            // Generate reference number and date
+            const referenceNumber = 'MJM-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
+            document.getElementById('referenceNumber').textContent = referenceNumber;
+            document.getElementById('referenceDate').textContent = new Date().toLocaleDateString('es-PE');
+
+            // Store in sessionStorage for confirmation
+            sessionStorage.setItem('paymentData', JSON.stringify({
+                ...paymentData,
+                referenceNumber: referenceNumber,
+                date: new Date().toLocaleDateString('es-PE')
+            }));
+        }
+
+        function setupFormValidation() {
+            document.getElementById('operationCode').addEventListener('input', function(e) {
+                e.target.value = e.target.value.toUpperCase();
+            });
+
+            document.getElementById('paymentForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                confirmPayment(e);
+            });
+        }
+
+        function confirmPayment(event) {
+            event.preventDefault();
+            
+            const operationCode = document.getElementById('operationCode').value;
+            const validationMsg = document.getElementById('validationMessage');
+            const confirmBtn = document.getElementById('confirmBtn');
+
+            // Simulate validation with Banco de la Nación
+            if (operationCode.length >= 10) {
+                // Simulate API call
+                confirmBtn.disabled = true;
+                confirmBtn.textContent = 'Validando...';
+
+                setTimeout(() => {
+                    // Simulate successful validation
+                    validationMsg.classList.remove('error');
+                    validationMsg.classList.add('success');
+                    validationMsg.innerHTML = '<span class="validation-icon">✓</span>Código de operación válido. El pago ha sido confirmado en el sistema del Banco de la Nación.';
+
+                    // Generate expediente number
+                    const expedienteNumber = 'EXP-' + new Date().getFullYear() + '-' + String(Math.floor(Math.random() * 100000)).padStart(5, '0');
+                    document.getElementById('successExpedient').textContent = expedienteNumber;
+
+                    // Show success alert
+                    document.getElementById('successAlert').classList.add('show');
+
+                    // Store payment data
+                    const paymentData = JSON.parse(sessionStorage.getItem('paymentData'));
+                    let procedures = JSON.parse(localStorage.getItem('procedures')) || [];
+                    
+                    procedures.push({
+                        ...paymentData,
+                        expedienteNumber: expedienteNumber,
+                        operationCode: operationCode,
+                        status: 'Pagado',
+                        paymentDate: new Date().toLocaleDateString('es-PE')
+                    });
+
+                    localStorage.setItem('procedures', JSON.stringify(procedures));
+
+                    // Redirect after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = 'confirmacion-tramite.html?numero=' + expedienteNumber;
+                    }, 3000);
+                }, 1500);
+            } else {
+                validationMsg.classList.remove('success');
+                validationMsg.classList.add('error');
+                validationMsg.innerHTML = '<span class="validation-icon">✗</span>El código de operación debe tener al menos 10 caracteres. Por favor verifica el código del banco.';
+            }
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

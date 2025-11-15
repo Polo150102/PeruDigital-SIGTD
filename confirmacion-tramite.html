@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmación de Expediente - SIGTD</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style_header.css">
+    <link rel="stylesheet" href="style_footer.css">
+    <style>
+        .confirmation-container {
+            max-width: 700px;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .confirmation-box {
+            background-color: white;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Success Header */
+        .confirmation-header {
+            background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .confirmation-header .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .confirmation-header h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .confirmation-header p {
+            font-size: 1.05rem;
+            opacity: 0.95;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Summary Block */
+        .confirmation-summary {
+            padding: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .confirmation-summary h3 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .summary-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .summary-field label {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-field .value {
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 1.1rem;
+            word-break: break-all;
+        }
+
+        .summary-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .expediente-number {
+            background-color: var(--accent-light);
+            border: 2px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .expediente-number .label {
+            color: var(--text-gray);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .expediente-number .number {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Next Steps Section */
+        .next-steps {
+            padding: 2rem;
+            background-color: var(--bg-light);
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .next-steps h3 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .next-steps p {
+            color: var(--text-gray);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        .next-steps strong {
+            color: var(--text-dark);
+            font-weight: 600;
+        }
+
+        /* Action Buttons */
+        .confirmation-buttons {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-query {
+            display: inline-block;
+            padding: 0.85rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-query:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.3);
+        }
+
+        .btn-home {
+            display: inline-block;
+            padding: 0.85rem 1.5rem;
+            background-color: white;
+            color: var(--primary);
+            text-decoration: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-home:hover {
+            background-color: var(--bg-light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+        }
+
+        /* Information Box */
+        .info-box {
+            background-color: rgba(30, 64, 175, 0.05);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            color: var(--primary);
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .info-box p {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .confirmation-header {
+                padding: 2rem 1.5rem;
+            }
+
+            .confirmation-header .success-icon {
+                font-size: 3rem;
+            }
+
+            .confirmation-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .confirmation-summary,
+            .next-steps {
+                padding: 1.5rem;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .confirmation-buttons {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+                padding: 1.5rem;
+            }
+
+            .btn-query,
+            .btn-home {
+                padding: 0.75rem 1rem;
+                font-size: 0.95rem;
+            }
+
+            .expediente-number .number {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <img src="img/SJM.png">
+                <div class="logo">
+                    
+                    <h1>SIGTD</h1>
+                    <p>Sistema Digital de Trámites</p>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Inicio</a>
+                    <a href="catalogo_tramites.html" class="nav-link active">Nuevo Trámite</a>
+                    <a href="consulta-tramite.html" class="nav-link">Consultar Estado</a>
+                    <a href="admin.html" class="nav-link">Administración</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="confirmation-container">
+            <div class="confirmation-box">
+                <!-- Success Header -->
+                <div class="confirmation-header">
+                    <div class="success-icon">✓</div>
+                    <h2>Tu trámite ha sido registrado correctamente</h2>
+                    <p>Tu expediente está en el sistema municipal</p>
+                </div>
+
+                <!-- Summary Block -->
+                <div class="confirmation-summary">
+                    <h3>📋 Resumen de tu Solicitud</h3>
+                    
+                    <!-- Expediente Number Highlight -->
+                    <div class="expediente-number">
+                        <div class="label">Número de Expediente</div>
+                        <div class="number" id="expedienteDisplay">EXP-SJM-2025-00001</div>
+                    </div>
+
+                    <!-- Summary Details Grid -->
+                    <div class="summary-grid">
+                        <div class="summary-field">
+                            <label>Tipo de Trámite</label>
+                            <div class="value" id="summaryType">Licencia de Funcionamiento</div>
+                        </div>
+
+                        <div class="summary-field">
+                            <label>Fecha de Registro</label>
+                            <div class="value" id="summaryDate">14/11/2025</div>
+                        </div>
+
+                        <div class="summary-field">
+                            <label>Hora de Registro</label>
+                            <div class="value" id="summaryTime">14:32:15</div>
+                        </div>
+
+                        <div class="summary-field">
+                            <label>Código de Operación BN</label>
+                            <div class="value" id="summaryCode">-</div>
+                        </div>
+
+                        <div class="summary-field full">
+                            <label>Estado Inicial</label>
+                            <div class="value" style="color: var(--success);">🟢 Recibido</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Next Steps Section -->
+                <div class="next-steps">
+                    <h3>❓ ¿Qué puedes hacer ahora?</h3>
+                    
+                    <p>Puedes consultar el estado de tu trámite con tu <strong>DNI y el número de expediente</strong> generado arriba. Te mostraremos el progreso paso a paso hasta que tu trámite esté completamente procesado.</p>
+
+                    <div class="info-box">
+                        <h4>💡 Información Importante</h4>
+                        <p>Guarda tu número de expediente en un lugar seguro. Lo necesitarás para consultar el estado de tu trámite en cualquier momento. Puedes compartirlo con la municipalidad si necesitas información adicional.</p>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>📧 Notificaciones</h4>
+                        <p>Recibirás notificaciones automáticas por email en cada cambio de estado de tu trámite. Verifica tu correo electrónico regularmente.</p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="confirmation-buttons">
+                    <button class="btn-query" onclick="goToQuery()">Ir a Consultar Estado</button>
+                    <button class="btn-home" onclick="goToHome()">Volver al Inicio</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Municipalidad de San Juan de Miraflores</h4>
+                    <p>Av. Principal 123, San Juan de Miraflores</p>
+                    <p>Teléfono: (01) 123-4567</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Útiles</h4>
+                    <a href="index.html">Inicio</a>
+                    <a href="catalogo-tramites.html">Catálogo de Trámites</a>
+                    <a href="consulta-tramite.html">Consultar Estado</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Municipalidad de San Juan de Miraflores. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadConfirmationData();
+        });
+
+        function loadConfirmationData() {
+            // Get data from URL parameters or sessionStorage/localStorage
+            const urlParams = new URLSearchParams(window.location.search);
+            const expedienteNumber = urlParams.get('numero') || sessionStorage.getItem('currentExpediente') || generateExpedienteNumber();
+
+            // Get payment data from sessionStorage or localStorage
+            const paymentData = JSON.parse(sessionStorage.getItem('paymentData')) || {};
+            
+            // Get from procedures list if available
+            let procedures = JSON.parse(localStorage.getItem('procedures')) || [];
+            let currentProcedure = procedures.find(p => p.expedienteNumber === expedienteNumber) || {};
+
+            // Set display data
+            document.getElementById('expedienteDisplay').textContent = expedienteNumber;
+            
+            document.getElementById('summaryType').textContent = paymentData.procedureType || currentProcedure.procedureType || 'Licencia de Funcionamiento';
+            
+            const now = new Date();
+            document.getElementById('summaryDate').textContent = now.toLocaleDateString('es-PE');
+            document.getElementById('summaryTime').textContent = now.toLocaleTimeString('es-PE');
+            
+            const operationCode = paymentData.operationCode || currentProcedure.operationCode || urlParams.get('code') || '-';
+            document.getElementById('summaryCode').textContent = operationCode;
+
+            // Store current expediente for reference
+            sessionStorage.setItem('currentExpediente', expedienteNumber);
+        }
+
+        function generateExpedienteNumber() {
+            const year = new Date().getFullYear();
+            const random = String(Math.floor(Math.random() * 100000)).padStart(5, '0');
+            return `EXP-SJM-${year}-${random}`;
+        }
+
+        function goToQuery() {
+            const expedienteNumber = document.getElementById('expedienteDisplay').textContent;
+            window.location.href = `consulta-tramite.html?numero=${expedienteNumber}`;
+        }
+
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Trámites - SIGTD</title>
+    <link rel="stylesheet" href="styles_catalog.css">
+    <link rel="stylesheet" href="style_header.css">
+    <link rel="stylesheet" href="style_footer.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <img src="img/SJM.png">
+                <div class="logo">
+                    
+                    <h1>SIGTD</h1>
+                    <p>Sistema Digital de Trámites</p>
+                </div>
+                <nav class="nav">
+                    <a href="index.html" class="nav-link">Inicio</a>
+                    <a href="catalogo_tramites.html" class="nav-link active">Nuevo Trámite</a>
+                    <a href="consulta-tramite.html" class="nav-link">Consultar Estado</a>
+                    <a href="admin.html" class="nav-link">Administración</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header Section -->
+    <section class="page-header">
+        <div class="container">
+            <h2>Catálogo de Servicios</h2>
+            <p>Seleccione el trámite que desea realizar</p>
+            <p class="subtitle">Elija uno de los trámites disponibles. Algunos pueden requerir RUC, pago o documentación específica.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <section class="catalog">
+            <!-- Added procedures catalog with responsive grid layout -->
+            <div class="procedures-catalog">
+                <!-- Card 1: Licencia de Funcionamiento -->
+                <div class="procedure-card">
+                    <div class="card-header">
+                        <h3>Licencia de Funcionamiento</h3>
+                        <span class="badge badge-primary">Comercial</span>
+                    </div>
+                    <p class="card-description">
+                        Autoriza el funcionamiento de un establecimiento comercial de riesgo bajo en el distrito de San Juan de Miraflores.
+                    </p>
+                    
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📋</span>
+                            <span>Requiere RUC</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">💳</span>
+                            <span>Requiere pago: S/ 250</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏱</span>
+                            <span>Tiempo: 5 días hábiles</span>
+                        </div>
+                    </div>
+
+                    <a href="solicitud-tramite.html?tramite=licencia" class="btn btn-primary" style="width: 100%; text-align: center; display: block;">Solicitar este trámite</a>
+                </div>
+
+                <!-- Card 2: Constancia de No Adeudo -->
+                <div class="procedure-card">
+                    <div class="card-header">
+                        <h3>Constancia de No Adeudo</h3>
+                        <span class="badge badge-success">Tributario</span>
+                    </div>
+                    <p class="card-description">
+                        Certifica que el contribuyente no mantiene deudas tributarias con la municipalidad.
+                    </p>
+                    
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📋</span>
+                            <span>Requiere RUC / DNI</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">💳</span>
+                            <span>Requiere pago: S/ 50</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏱</span>
+                            <span>Tiempo: 1 día hábil</span>
+                        </div>
+                    </div>
+
+                    <a href="solicitud-tramite.html?tramite=no-adeudo" class="btn btn-primary" style="width: 100%; text-align: center; display: block;">Solicitar este trámite</a>
+                </div>
+
+                <!-- Card 3: Certificado ITSE -->
+                <div class="procedure-card">
+                    <div class="card-header">
+                        <h3>Certificado ITSE</h3>
+                        <span class="badge badge-warning">Seguridad</span>
+                    </div>
+                    <p class="card-description">
+                        Inspección Técnica de Seguridad en Edificaciones. Certifica el cumplimiento de normas de seguridad.
+                    </p>
+                    
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📋</span>
+                            <span>Requiere planos y RUC</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">💳</span>
+                            <span>Requiere pago: S/ 500</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏱</span>
+                            <span>Tiempo: 15 días hábiles</span>
+                        </div>
+                    </div>
+
+                    <a href="solicitud-tramite.html?tramite=itse" class="btn btn-primary" style="width: 100%; text-align: center; display: block;">Solicitar este trámite</a>
+                </div>
+
+                <!-- Card 4: Matrimonio Civil -->
+                <div class="procedure-card">
+                    <div class="card-header">
+                        <h3>Matrimonio Civil</h3>
+                        <span class="badge badge-primary">Civil</span>
+                    </div>
+                    <p class="card-description">
+                        Celebración de matrimonio civil ante la municipalidad. Requiere documentación completa de los contrayentes.
+                    </p>
+                    
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📋</span>
+                            <span>Requiere DNI y documentos</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">💳</span>
+                            <span>Requiere pago: S/ 100</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏱</span>
+                            <span>Tiempo: Agendado</span>
+                        </div>
+                    </div>
+
+                    <a href="solicitud-tramite.html?tramite=matrimonio" class="btn btn-primary" style="width: 100%; text-align: center; display: block;">Solicitar este trámite</a>
+                </div>
+
+                <!-- Card 5: Certificado de Zonificación -->
+                <div class="procedure-card">
+                    <div class="card-header">
+                        <h3>Certificado de Zonificación</h3>
+                        <span class="badge badge-success">Urbanístico</span>
+                    </div>
+                    <p class="card-description">
+                        Documento que acredita la zonificación de un terreno o predio en el distrito de San Juan de Miraflores.
+                    </p>
+                    
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📋</span>
+                            <span>Requiere plano catastral</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">💳</span>
+                            <span>Requiere pago: S/ 75</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏱</span>
+                            <span>Tiempo: 3 días hábiles</span>
+                        </div>
+                    </div>
+
+                    <a href="solicitud-tramite.html?tramite=zonificacion" class="btn btn-primary" style="width: 100%; text-align: center; display: block;">Solicitar este trámite</a>
+                </div>
+
+                <!-- Card 6: Permiso de Ocupación de Vía Pública -->
+                <div class="procedure-card">
+                    <div class="card-header">
+                        <h3>Permiso de Ocupación de Vía Pública</h3>
+                        <span class="badge badge-warning">Operativo</span>
+                    </div>
+                    <p class="card-description">
+                        Autorización para ocupar temporalmente la vía pública con fines comerciales o de eventos.
+                    </p>
+                    
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📋</span>
+                            <span>Requiere RUC y plano</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">💳</span>
+                            <span>Requiere pago: S/ 150</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏱</span>
+                            <span>Tiempo: 7 días hábiles</span>
+                        </div>
+                    </div>
+
+                    <a href="solicitud-tramite.html?tramite=via-publica" class="btn btn-primary" style="width: 100%; text-align: center; display: block;">Solicitar este trámite</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section class="info-section">
+            <h3>¿Necesitas ayuda?</h3>
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4>Consultas por teléfono</h4>
+                    <p>Llama a nuestro número de atención: <strong>+51 (1) 2244-6000</strong></p>
+                </div>
+                <div class="info-card">
+                    <h4>Correo electrónico</h4>
+                    <p>Envía tu consulta a: <strong>info@miraflores.gob.pe</strong></p>
+                </div>
+                <div class="info-card">
+                    <h4>Presencial</h4>
+                    <p>Visita nuestras oficinas: Av. Pedro de Osma 135, Miraflores</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Municipalidad de San Juan de Miraflores</h4>
+                    <p>Av. Belisario Suarez Nº 1075 - ZONA D - Lima - Lima - San Juan de Miraflores - Perú - 15801</p>
+                    <p>Teléfono: (01) 7216003</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Útiles</h4>
+                    <a href="#">Inicio</a>
+                    <a href="#">Nuevo Trámite</a>
+                    <a href="#">Consultar Estado</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Información Legal</h4>
+                    <a href="#">Política de Privacidad</a>
+                    <a href="#">Términos de Uso</a>
+                    <a href="#">Contacto</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Peru Digital PF - Municipalidad de San Juan de Miraflores. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
